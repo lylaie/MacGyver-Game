@@ -6,23 +6,12 @@ ETHER = 'E'
 WALL = 'M'
 FLOOR = 'o'
 
-sprites = {
-        FLOOR: pygame.image.load('ressources/floor.png').convert_alpha(),
-        WALL: pygame.image.load('ressources/wall.png').convert_alpha(),
-        NEEDLE: pygame.image.load('ressources/aiguillem.png').convert_alpha(),
-        PIPE: pygame.image.load('ressources/pipe.png').convert_alpha(),
-        ETHER: pygame.image.load('ressources/ether.png').convert_alpha(),
-        HEROS: pygame.image.load('ressources/MacGyver.png').convert_alpha(),
-        GUARDIAN: pygame.image.load('ressources/Gardien.png').convert_alpha()
-    }
-
 directions = {
-    UP: (0,-1),
-    DOWN : (0,1),
-    RIGHT: (1,0),
-    LEFT: (-1,0)
+    'up': (0,-1),
+    'down' : (0,1),
+    'right': (1,0),
+    'left': (-1,0)
 }
-
 
 maze = [
     [FLOOR,FLOOR,FLOOR,FLOOR,WALL,WALL,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR],

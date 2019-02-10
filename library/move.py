@@ -1,3 +1,5 @@
+from library.constantes import directions
+
 def checkPosition(next_line, next_column):
     if 0 <= next_column <= 14 and 0 <= next_line <= 14:
         if maze[next_column][next_line] == 'o':
@@ -12,14 +14,15 @@ def checkPosition(next_line, next_column):
             print("Vous avez trouvé un objet")
             return True
 
-def checkKey(eventKey): 
-    direction = eventKey
+def checkMove(eventKeyName): 
+    direction = directions[eventKeyName]
+    print(direction)
     authorization = checkPosition(position_heros[0] + direction[0], position_heros[1] + direction[1])
-    if authorization == True:
+    if authorization:
         position_heros = position_heros.move(direction)
         return position_heros
     else:
-        print("Impossible direction")
+        print("Unauthorized move")
         return position_heros
 
 
