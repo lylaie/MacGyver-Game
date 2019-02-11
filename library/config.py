@@ -6,13 +6,6 @@ ETHER = 'E'
 WALL = 'M'
 FLOOR = 'o'
 
-directions = {
-    'up': (0,-1),
-    'down' : (0,1),
-    'right': (1,0),
-    'left': (-1,0)
-}
-
 maze = [
     [FLOOR,FLOOR,FLOOR,FLOOR,WALL,WALL,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR],
     [WALL,WALL,WALL,FLOOR,FLOOR,FLOOR,FLOOR,WALL,WALL,FLOOR,WALL,FLOOR,WALL,WALL,FLOOR],
@@ -31,5 +24,7 @@ maze = [
     [FLOOR,FLOOR,FLOOR,FLOOR,WALL,WALL,FLOOR,FLOOR,FLOOR,FLOOR,FLOOR,WALL,WALL,FLOOR,WALL]
 ]
 
-position_heros = (0,0)
-position_guardian = (14,13)
+INI_HERO = [0,0]
+LOC_GUARDIAN= [14,13]
+
+

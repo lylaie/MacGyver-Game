@@ -2,11 +2,11 @@
 # coding:utf-8
 
 from library.view import Interface
-from library.board import initMaze
+from library.board import Game
 
 def main():
-    initMaze()
-    gui = Interface()
+    game = Game()
+    gui = Interface(game)
     gui.run()
 
 

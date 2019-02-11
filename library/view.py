@@ -1,14 +1,14 @@
 import pygame
 from pygame.locals import *
 
-from library.board import *
-from library.constantes import *
-from library.move import checkMove
+from library.config import FLOOR, HEROS, GUARDIAN, WALL, NEEDLE, PIPE, ETHER
+from library.board import Game
 
 
 class Interface:
     
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         pygame.init()
         self.window = pygame.display.set_mode((600,600), RESIZABLE)
 
@@ -24,18 +24,18 @@ class Interface:
        }
 
         #We direction
-        self.direction = {
-            K_UP: 'K_UP',
-            K_DOWN: 'K_DOWN',
-            K_RIGHT: 'K_RIGHT',
-            K_LEFT: 'K_LEFT'
+        self.movement = {
+            K_UP: 'UP',
+            K_DOWN: 'DOWN',
+            K_RIGHT: 'RIGHT',
+            K_LEFT: 'LEFT'
        }
 
     def show_maze(self):
-        for i, row in enumerate(maze):
+        for i, row in enumerate(self.game.maze):
             for j, cell in enumerate(row):
                 self.show_cell(cell, i, j)
-        pygame.display.flip()
+        
 
     def show_cell(self, cell, i, j):
         sprite = self.sprites[cell]
@@ -51,4 +51,5 @@ class Interface:
                 if event.type == QUIT:
                     run = 0
                 elif event.type == KEYDOWN:
-                    checkMove(pygame.key.name(event.key))
+                    self.game.move_hero(self.movement[event.key])
+            pygame.display.flip()
