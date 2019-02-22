@@ -1,14 +1,20 @@
-from random import randint 
+"""
+    Random library to generate the position of the items
+"""
+
+from random import randint
 
 from library.config import *
 
 class Game:
-   
-    directions = {
-        'UP': (0,-1),
-        'DOWN' : (0,1),
-        'RIGHT': (1,0),
-        'LEFT': (-1,0)
+    """
+        Model the maze, the items and characters.
+    """
+    DIRECTIONS = {
+        'UP': (0, -1),
+        'DOWN' : (0, 1),
+        'RIGHT': (1, 0),
+        'LEFT': (-1, 0)
     }
 
     def __init__(self):
@@ -16,9 +22,9 @@ class Game:
             Initialize the data of the maze.
             The three objects (needle, plastic_pipe and ether) are created and placed on
             the board.
-            You can change here the starting position of the heros and the emplacement of the guardian.
+            You can change here the starting position of the heros and the guardian'emplacement.
         """
-        self.maze = maze
+        self.maze = MAZE
 
         self.hero_loc = INI_HERO
         self.maze[INI_HERO[0]][INI_HERO[1]] = HEROS
@@ -28,8 +34,10 @@ class Game:
         self.choose_place(PIPE)
         self.choose_place(ETHER)
 
+        self.counter_items = 0
+
         self.print_maze()
-        
+
     def print_maze(self):
         """
             Print the Maze in the console.
@@ -42,58 +50,70 @@ class Game:
                 print(column, end=' ')
             print()
 
-
-    def choose_place(self,item):
+    def choose_place(self, item):
         """
             Computes a random abscissa and a random ordonate in relation
             to the free position in the maze. The free positions are the whole position
             without wall, objects or start and end point.
         """
 
-        row = randint(0,14)
-        column = randint(0,14)
+        row = randint(0, 14)
+        column = randint(0, 14)
         print(row, column)
-
         while self.maze[row][column] != FLOOR:
             print('Bad choice')
-            row = randint(0,14)
-            column = randint(0,14)
+            row = randint(0, 14)
+            column = randint(0, 14)
             print(row, column)
-
         print('Empty place')
         self.maze[row][column] = item
-        return row,column
+        return row, column
 
     def check_position(self, line, column):
-        if 0 <= column <= 14 and 0 <= line <= 14:
-            if maze[line][column] == FLOOR:
-                return True
-            if maze[line][column] == GUARDIAN:
-                print('Fin du game')
-                return True
-            if maze[line][column] == WALL:
-                print('Mur!')
-                return False
-            else:
-                print("Vous avez trouvé un objet")
-                return True
+        """
+            Check the value of the next position in the Maze.
+            If the value is FLOOR, the function returns True.
+            If the value is WALL, the function returns False.
+            If the value is NEEDLE, PIPE or ETHER, the function returns True
+            and increases the counter_items of 1.
+            If the value is GUARDIAN, the function checks the value of counter_items.
+            If the counter_items is different to 3, the function returns False and GameOver
+            If the counter_items equals to 3, the function returns True and prints 'You win!'
 
-   
-    def move_hero(self,keyaction):
-        direction = self.directions[keyaction]
+        """
+        if 0 <= column <= 14 and 0 <= line <= 14:
+            if self.maze[line][column] == FLOOR:
+                return True
+            elif self.maze[line][column] == GUARDIAN:
+                if self.counter_items != 3:
+                    print('Game Over')
+                    return False
+                print('You win !')
+                return True
+            elif self.maze[line][column] == WALL:
+                print('Boom ! It\'s a wall !')
+                return False
+            print("Waouh ! You found an useful item ! : {}".format(self.maze[line][column]))
+            self.counter_items += 1
+            return True
+        return False
+
+    def move_hero(self, keyaction):
+        """
+            Check the next position and if the movement is authorized or not. If it is,
+            return the new value of the hero position, changes the value of floor and ini_hero
+            in the maze.
+        """
+        direction = self.DIRECTIONS[keyaction]
         print(keyaction, direction)
         new_hero_line = self.hero_loc[0] + direction[1]
         new_hero_column = self.hero_loc[1] + direction[0]
         new_hero_loc = (new_hero_line, new_hero_column)
         print(new_hero_loc)
-        authorization = self.check_position(new_hero_line,new_hero_column )
+        authorization = self.check_position(new_hero_line, new_hero_column)
         if authorization:
             self.maze[self.hero_loc[0]][self.hero_loc[1]] = FLOOR
             self.maze[new_hero_line][new_hero_column] = HEROS
-            self.hero_loc = (new_hero_line,new_hero_column)
+            self.hero_loc = (new_hero_line, new_hero_column)
         else:
             print("Unauthorized move")
-        
-      
-        
-    
