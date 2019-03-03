@@ -6,8 +6,8 @@
     Game is the class to create the board
 """
 
-from library.view import Interface
-from library.board import Game
+from library.interface import Interface
+from library.game import Game
 
 def main():
 

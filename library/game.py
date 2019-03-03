@@ -27,8 +27,6 @@ class Game:
         self.maze = MAZE
 
         self.hero_loc = INI_HERO
-        self.maze[INI_HERO[0]][INI_HERO[1]] = HEROS
-        self.maze[LOC_GUARDIAN[0]][LOC_GUARDIAN[1]] = GUARDIAN
 
         self.choose_place(NEEDLE)
         self.choose_place(PIPE)

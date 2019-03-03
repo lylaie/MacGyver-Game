@@ -1,7 +1,7 @@
 import pygame as pg
 
 from library.config import FLOOR, HEROS, GUARDIAN, WALL, NEEDLE, PIPE, ETHER
-from library.board import Game
+
 
 
 class Interface:
@@ -17,7 +17,8 @@ class Interface:
         self.game = game
 
         pg.init()
-        self.window = pg.display.set_mode((600, 600))
+        self.window = pg.display.set_mode((680, 600))
+        self.window.fill((230, 230, 230))
         pg.display.set_caption("MacGseyver Escape")
 
         # We preload corresponding images for every type of items, floor, wall and characters.
@@ -46,7 +47,7 @@ class Interface:
         for i, row in enumerate(self.game.maze):
             for j, cell in enumerate(row):
                 self.show_cell(cell, i, j)
-
+        
     def show_cell(self, cell, i, j):
         """
             Print the image corresponding to the cell at the given coordinates
@@ -60,11 +61,16 @@ class Interface:
         """
             Loop to run and refresh the view of the game
         """
-        while True:
+        runing = True
+        while runing:
             self.show_maze()
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    run = 0
+                    runing = False
                 elif event.type == pg.KEYDOWN:
-                    self.game.move_hero(self.movement[event.key])
+                    if event.key in self.movement:
+                        self.game.move_hero(self.movement[event.key])
+                    elif event.key == pg.K_q:
+                        exit(0)
+
             pg.display.flip()
