@@ -2,6 +2,7 @@ import pygame as pg
 
 from library.config import FLOOR, HEROS, GUARDIAN, WALL, NEEDLE, PIPE, ETHER
 from library.message import Message
+from library.items import Items
 
 class Interface:
     """
@@ -16,7 +17,7 @@ class Interface:
         self.game = game
 
         pg.init()
-        self.window = pg.display.set_mode((680, 600))
+        self.window = pg.display.set_mode((640, 600))
         self.window.fill((230, 230, 230))
         pg.display.set_caption("MacGseyver Escape")
 
@@ -39,7 +40,7 @@ class Interface:
             pg.K_LEFT: 'LEFT'
         }
 
-        self.counter = self.game.counter_items
+        
   
     def check_final_value(self):
         if self.game.okay == 1:
@@ -51,7 +52,7 @@ class Interface:
     def show_find_objects(self):
         for i, row in enumerate(self.game.list_objects):
             sprite = self.sprites[row]
-            self.window.blit(sprite, (40*16, 40*(1+i)))
+            self.window.blit(sprite, (40*15, 40*(1+i)))
                     
 
     def show_maze(self):
@@ -78,8 +79,11 @@ class Interface:
         runing = self.game.okay
 
         while not self.game.okay:
+            self.items = Items(self.window, self.game.counter_items)
             self.show_maze()
             self.show_find_objects()
+            self.items.show_number_items()
+            print(self.game.counter_items)
             
             for event in pg.event.get():
                 if event.type == pg.QUIT:
