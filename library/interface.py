@@ -1,8 +1,7 @@
 import pygame as pg
 
 from library.config import FLOOR, HEROS, GUARDIAN, WALL, NEEDLE, PIPE, ETHER
-
-
+from library.message import Message
 
 class Interface:
     """
@@ -40,6 +39,21 @@ class Interface:
             pg.K_LEFT: 'LEFT'
         }
 
+        self.counter = self.game.counter_items
+  
+    def check_final_value(self):
+        if self.game.okay == 1:
+            Message(self.window, "Game Over").draw_message()
+        elif self.game.okay == 2:
+            Message(self.window, "You win").draw_message()
+
+
+    def show_find_objects(self):
+        for i, row in enumerate(self.game.list_objects):
+            sprite = self.sprites[row]
+            self.window.blit(sprite, (40*16, 40*(1+i)))
+                    
+
     def show_maze(self):
         """
             Show the labyrinth
@@ -61,16 +75,33 @@ class Interface:
         """
             Loop to run and refresh the view of the game
         """
-        runing = True
-        while runing:
+        runing = self.game.okay
+
+        while not self.game.okay:
             self.show_maze()
+            self.show_find_objects()
+            
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    runing = False
+                    exit(0)
                 elif event.type == pg.KEYDOWN:
                     if event.key in self.movement:
                         self.game.move_hero(self.movement[event.key])
                     elif event.key == pg.K_q:
                         exit(0)
-
             pg.display.flip()
+        self.check_final_value()
+        pg.display.flip()
+        while True: 
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    exit(0)
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_q:
+                        exit(0)
+           
+
+            
+
+            
+        

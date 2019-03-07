@@ -2,6 +2,8 @@
     Random library to generate the position of the items
 """
 
+import sys
+
 from random import randint
 
 from library.config import *
@@ -33,6 +35,9 @@ class Game:
         self.choose_place(ETHER)
 
         self.counter_items = 0
+        self.list_objects = []
+
+        self.okay = 0
 
         self.print_maze()
 
@@ -59,11 +64,9 @@ class Game:
         column = randint(0, 14)
         print(row, column)
         while self.maze[row][column] != FLOOR:
-            print('Bad choice')
             row = randint(0, 14)
             column = randint(0, 14)
             print(row, column)
-        print('Empty place')
         self.maze[row][column] = item
         return row, column
 
@@ -85,14 +88,14 @@ class Game:
             elif self.maze[line][column] == GUARDIAN:
                 if self.counter_items != 3:
                     print('Game Over')
+                    self.okay = 1
                     return False
-                print('You win !')
+                self.okay = 2
                 return True
             elif self.maze[line][column] == WALL:
-                print('Boom ! It\'s a wall !')
                 return False
-            print("Waouh ! You found an useful item ! : {}".format(self.maze[line][column]))
             self.counter_items += 1
+            self.list_objects.append(self.maze[line][column])
             return True
         return False
 
@@ -103,11 +106,9 @@ class Game:
             in the maze.
         """
         direction = self.DIRECTIONS[keyaction]
-        print(keyaction, direction)
         new_hero_line = self.hero_loc[0] + direction[1]
         new_hero_column = self.hero_loc[1] + direction[0]
         new_hero_loc = (new_hero_line, new_hero_column)
-        print(new_hero_loc)
         authorization = self.check_position(new_hero_line, new_hero_column)
         if authorization:
             self.maze[self.hero_loc[0]][self.hero_loc[1]] = FLOOR
