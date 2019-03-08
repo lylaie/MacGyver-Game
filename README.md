@@ -9,8 +9,12 @@ Création d'un jeu de logique (labyrinthe) en Python 3, dont le but est d'emmene
 
 Python 3 et la librairie Pygame sont indispensable au bon fonctionnement du programme. 
 
-Vous trouverez la marche à suivre pour l'installation de Python 3 ici : https://docs.python.org/fr/3/using/index.html
-Pour le module Pygame, c'est par ici que cela se passe : https://www.pygame.org/wiki/GettingStarted
+Vous pouvez installer <code>python3</code> à l'adresse suivante : https://www.python.org/downloads/
+
+Pour le module Pygame, vous devez déjà avoir <code>pip</code> installé sur votre machine. 
+Lancez l'installation de pygame avec cette commande dans votre terminal : 
+
+<code>python3 -m pip install -U pygame --user</code>
 
 <h2> Lancement du jeu </h2>
 
